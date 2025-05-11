@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from "react";
 
 // Reat application
 const App = () => {
@@ -10,30 +10,36 @@ const App = () => {
 
   const fetchData = async () => {
     try {
-      const response = await fetch('http://localhost:5000/api/messages/');
+      // const response = await fetch('http://localhost:5000/api/messages/');
+      const response = await fetch(
+        import.meta.env.VITE_BACKEND_URL + "messages/"
+      );
       const jsonData = await response.json();
       setData(jsonData.messages);
     } catch (error) {
-      console.error('Error fetching data:', error);
+      console.error("Error fetching data:", error);
     }
   };
 
   const postData = async () => {
     try {
-      const response = await fetch('http://localhost:5000/api/messages/', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          message: 'Bonjour à tous! : ' + new Date().toLocaleString(),
-        }),
-      });
+      const response = await fetch(
+        import.meta.env.VITE_BACKEND_URL + "messages/",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            message: "Bonjour à tous! : " + new Date().toLocaleString(),
+          }),
+        }
+      );
       const jsonData = await response.json();
-      console.log('Response from backend:', jsonData);
+      console.log("Response from backend:", jsonData);
       fetchData();
     } catch (error) {
-      console.error('Error posting data:', error);
+      console.error("Error posting data:", error);
     }
   };
 
